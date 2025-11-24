@@ -4,7 +4,7 @@ env:
   variables:
     AWS_REGION: "ap-south-1"
     ACCOUNT_ID: "465282644584"
-    REPO_NAME: "cygnet-node-demo-app"
+    REPO_NAME: "cygnet/node-demo-app"
 
 phases:
   pre_build:
