@@ -22,7 +22,7 @@ phases:
     commands:
       - echo "----------------------------------------"
       - echo "Checking for Dockerfile..."
-      - ls -la Dockerfile || (echo "❌ ERROR: Dockerfile not found" && exit 1)
+      - ls -la Dockerfile || (echo " ERROR: Dockerfile not found" && exit 1)
 
       - echo "Listing repo files..."
       - ls -la
