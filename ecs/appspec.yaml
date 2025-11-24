@@ -1,9 +1,9 @@
-version: 1.0
+version: 1
 Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: REPLACE_TASK_DEFINITION_ARN
+        TaskDefinition: TASK_DEFINITION
         LoadBalancerInfo:
-          ContainerName: node-app
+          ContainerName: "cygnet-demo-app"
           ContainerPort: 8080
