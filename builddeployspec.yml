@@ -34,7 +34,7 @@ phases:
     commands:
       - echo "----------------------------------------"
       - echo "Pushing Docker image to ECR..."
-      - docker push $IMAGE_URI || (echo "❌ ERROR: Docker push failed" && exit 1)
+      - docker push $IMAGE_URI 
 
       - echo "Creating FINAL task definition (taskdef-final.json)..."
       - sed "s|{{IMAGE_URI}}|$IMAGE_URI|g" ecs/ecs-task-def.json > taskdef-final.json
