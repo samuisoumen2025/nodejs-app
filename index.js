@@ -14,7 +14,7 @@ const app = express();
 
 // Root endpoint
 app.get('/', (req, res) => {
-    res.json({ sentence: 'Welcome to the CICD Automation world' });
+    res.json({ sentence: 'Welcome to the CICD Automation world soumen' });
 });
 
 // Prometheus /metrics endpoint
