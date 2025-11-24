@@ -22,13 +22,11 @@ phases:
     commands:
       - echo "----------------------------------------"
       - echo "Checking for Dockerfile..."
-      - ls -la Dockerfile || (echo " ERROR: Dockerfile not found" && exit 1)
       - echo "Listing repo files..."
       - ls -la
       - echo "----------------------------------------"
       - echo "Building Docker image..."
       - docker build -t node-demo-app . || (echo "❌ ERROR: Docker build failed" && exit 1)
-
       - echo "Tagging Docker image..."
       - docker tag node-demo-app:latest $IMAGE_URI
 
