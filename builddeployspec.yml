@@ -4,14 +4,15 @@ env:
   variables:
     AWS_REGION: "ap-south-1"
     ACCOUNT_ID: "465282644584"
-    REPO_NAME: "cygnet/node-demo-app"
+    REPO_NAME: "cygnet-node-demo-app"   # 🚨 FIXED (ECR repos cannot have /)
 
 phases:
   pre_build:
     commands:
-      - echo "Logging in to Amazon ECR..."
+      - echo "----------------------------------------"
+      - echo "Logging into Amazon ECR..."
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-      
+
       - echo "Generating build tag..."
       - export BUILD_TAG="build-${CODEBUILD_BUILD_NUMBER}"
       - export IMAGE_URI="$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME:$BUILD_TAG"
@@ -19,22 +20,36 @@ phases:
 
   build:
     commands:
+      - echo "----------------------------------------"
+      - echo "Checking for Dockerfile..."
+      - ls -la Dockerfile || { echo "❌ ERROR: Dockerfile not found"; exit 1; }
+
+      - echo "Listing repo files..."
+      - ls -la
+
+      - echo "----------------------------------------"
       - echo "Building Docker image..."
-      - docker build -t node-demo-app .
+      - docker build -t node-demo-app . || { echo "❌ ERROR: Docker build failed"; exit 1; }
+
+      - echo "Tagging Docker image as $IMAGE_URI"
       - docker tag node-demo-app:latest $IMAGE_URI
 
   post_build:
     commands:
-      - echo "Pushing Docker image to ECR..."
-      - docker push $IMAGE_URI
+      - echo "----------------------------------------"
+      - echo "Pushing image to ECR..."
+      - docker push $IMAGE_URI || { echo '❌ ERROR: Docker push failed'; exit 1; }
 
-      - echo "Creating FINAL task definition..."
+      - echo "----------------------------------------"
+      - echo "Creating FINAL task definition (taskdef-final.json)..."
       - sed "s|{{IMAGE_URI}}|$IMAGE_URI|g" ecs/ecs-task-def.json > taskdef-final.json
 
-      - echo "Preparing FINAL appspec file for CodeDeploy ECS..."
+      - echo "Creating FINAL appspec file (appspec-final.yaml)..."
       - sed "s|TASK_DEFINITION|taskdef-final.json|g" ecs/appspec.yaml > appspec-final.yaml
 
-      - echo "Build completed successfully."
+      - echo "----------------------------------------"
+      - echo "Build completed successfully!"
+      - echo "Artifacts ready for CodeDeploy."
 
 artifacts:
   files:
