@@ -26,7 +26,7 @@ phases:
       - ls -la
       - echo "----------------------------------------"
       - echo "Building Docker image..."
-      - docker build -t node-demo-app . || (echo "❌ ERROR: Docker build failed" && exit 1)
+      - docker build -t node-demo-app .
       - echo "Tagging Docker image..."
       - docker tag node-demo-app:latest $IMAGE_URI
 
