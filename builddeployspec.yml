@@ -40,7 +40,7 @@ phases:
       - sed "s|{{IMAGE_URI}}|$IMAGE_URI|g" ecs/ecs-task-def.json > taskdef-final.json
 
       - echo "Creating FINAL appspec file (appspec-final.yaml)..."
-      - sed "s|TASK_DEFINITION|taskdef-final.json|g" ecs/appspec.yaml > appspec-final.yaml
+      - sed "s|TASK_DEFINITION|taskdef-final.json|g" ecs/appspec.yaml > appspec.yaml
 
       - echo "----------------------------------------"
       - echo "Build completed successfully!"
