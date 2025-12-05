@@ -42,6 +42,10 @@ phases:
       - echo "Creating FINAL appspec file (appspec-final.yaml)..."
       - sed "s|TASK_DEFINITION|taskdef-final.json|g" ecs/appspec.yaml > appspec.yaml
 
+      - echo "Uploading artifacts to S3 bucket..."
+      - aws s3 cp taskdef-final.json s3://cygnet-demo-static-website/ --acl bucket-owner-full-control
+      - aws s3 cp appspec-final.yaml s3://cygnet-demo-static-website/ --acl bucket-owner-full-control
+
       - echo "----------------------------------------"
       - echo "Build completed successfully!"
 
