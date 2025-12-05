@@ -3,7 +3,7 @@ Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: "taskdef-final.json"
+        TaskDefinition: TASK_DEFINITION
         LoadBalancerInfo:
           ContainerName: "cygnet-demo-app"
           ContainerPort: 8080
