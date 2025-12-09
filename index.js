@@ -14,7 +14,7 @@ const app = express();
 
 // Root endpoint
 app.get('/', (req, res) => {
-    res.json({ sentence: 'Welcome to cygnet demo app' });
+    res.json({ sentence: 'Welcome to cygnet demo app from demo branch' });
 });
 
 // Prometheus /metrics endpoint
